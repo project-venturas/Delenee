@@ -57,6 +57,10 @@ CORS_ALLOWED_ORIGINS = [
     'https://delenee.onrender.com',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+   'https://delenee.onrender.com',
+]
+
 ROOT_URLCONF = 'delenee.urls'
 
 TEMPLATES = [
