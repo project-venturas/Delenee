@@ -1,14 +1,17 @@
 from django.db import models
 
+from address.models import Address
+
 # Create your models here.
 class Retailer(models.Model):
-    id = models.AutoField(primary_key=True,)
-    company_name = models.CharField(max_length=100)
-    owner_name = models.CharField(max_length=100)
-    gstin = models.CharField(max_length=100)
-    whatsapp_number = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    alternative_contact_number = models.CharField(max_length=100)
-    address_id = models.TextField()
+    company_name = models.CharField(max_length=255)
+    owner_name = models.CharField(max_length=255)
+    gstin = models.CharField(max_length=50, null=True, blank=True)
+    whatsapp_number = models.BigIntegerField()
+    alternative_contact_number = models.BigIntegerField()
+    email = models.EmailField()
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='retailers', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.company_name
