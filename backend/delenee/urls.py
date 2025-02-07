@@ -18,13 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from retailers.views import RetailerViewset
+from whatsappWebhook.views import whatsappWebhook
 
 router = routers.SimpleRouter()
 
 router.register(r'retailers', RetailerViewset)
+# router.register(r'webhooks',whatsappWebhook, name="whatsappWebhook" )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),  
+    path('', include(router.urls)),
+    path('webhook/6ceafd1d-4ea8-4c38-8eb5-0d8733d5cab7/', whatsappWebhook, name="whatsappWebhook" ),  # Whatsapp webhook endpoint
 ]
 
