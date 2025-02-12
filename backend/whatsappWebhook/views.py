@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from .functions import handle_message, handle_status
 import json
 
 @csrf_exempt 
@@ -19,6 +20,14 @@ def whatsappWebhook(request):
     elif request.method == "POST":
         data=json.loads(request.body)
         print("whatsappWebhook>>>", data)
+        response_value = data['entry'][0]['changes'][0]['value']
+        if 'messages' in response_value:
+            handle_message(response_value['messages'])
+        
+        if 'statuses' in response_value:
+            handle_status(response_value['statuses'][0]['status'], response_value['statuses'][0]['recipient_id'])
+
+        
         return HttpResponse("Success", status=200)
-    else:
+    else:   
         return HttpResponse("Error", status=400)
